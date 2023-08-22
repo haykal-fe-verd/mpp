@@ -5,7 +5,7 @@ import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 
-const appName = "MPP";
+const appName = "MPP Kab. Aceh Besar";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
