@@ -27,7 +27,7 @@ function MobileNavbar() {
             <SheetTrigger>
                 <Menu className="md:hidden" />
             </SheetTrigger>
-            <SheetContent side="left" className="p-5 text-white bg-slate-900">
+            <SheetContent side="left" className="p-5 text-white bg-blue-950">
                 <Link
                     href={route("home")}
                     className="-m-1.5 p-1.5 flex items-center gap-5"

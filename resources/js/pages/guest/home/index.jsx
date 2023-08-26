@@ -123,11 +123,12 @@ function Home() {
                 <div className="flex items-center justify-center p-5 mt-20">
                     <ScrollArea className="border rounded-md shadow-2xl shadow-primary/20 border-primary">
                         <div className="flex w-full p-5 space-x-10 rounded-md">
-                            {[...Array(10)].map((item) => (
+                            {[...Array(10)].map((item, index) => (
                                 <Card
                                     className={cn(
                                         "w-[360px] lg:w-96 text-center border-primary"
                                     )}
+                                    key={index}
                                 >
                                     <CardHeader
                                         className={cn(
@@ -155,7 +156,7 @@ function Home() {
             </section>
 
             {/* pengaduan/laporan */}
-            <section className="relative flex items-center justify-center h-screen lg:h-[700px]">
+            <section className="relative flex items-center justify-center h-screen lg:h-[900px]">
                 <img
                     src="/background.jpeg"
                     alt=""

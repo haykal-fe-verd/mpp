@@ -26,6 +26,11 @@ function Navbar() {
                         href={route("home")}
                         className="-m-1.5 p-1.5 flex items-center gap-5"
                     >
+                        <img
+                            src="/logo-a-besar.png"
+                            alt="Logo A Besar"
+                            className="w-8 h-9"
+                        />
                         <img src="/logo.png" alt="Logo" className="w-10 h-10" />
                         <h1 className="text-2xl font-bold tracking-tighter">
                             MPP Kab. Aceh Besar
