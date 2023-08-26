@@ -12,4 +12,9 @@ class HomeController extends Controller
     {
         return Inertia::render('guest/home/index');
     }
+
+    public function about(): Response
+    {
+        return Inertia::render('guest/about/index');
+    }
 }

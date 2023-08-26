@@ -1,15 +1,17 @@
 import React from "react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { Menu } from "lucide-react";
 
 import MobileNavbar from "@/components/mobile-navbar";
 
 function Navbar() {
+    const { mpp } = usePage().props;
+
     const navigation = [
         { name: "Beranda", href: route("home") },
         { name: "Daftar Instansi", href: "#" },
         { name: "Daftar Layanan", href: "#" },
-        { name: "Tentang MPP", href: "#" },
+        { name: "Tentang MPP", href: route("about") },
         { name: "Berita", href: "#" },
         { name: "Pengaduan", href: "#" },
         { name: "Daftar", href: route("register") },
@@ -31,7 +33,11 @@ function Navbar() {
                             alt="Logo A Besar"
                             className="w-8 h-9"
                         />
-                        <img src="/logo.png" alt="Logo" className="w-10 h-10" />
+                        <img
+                            src={`/storage/${mpp.logo}`}
+                            alt="Logo"
+                            className="w-10 h-10"
+                        />
                         <h1 className="text-2xl font-bold tracking-tighter">
                             MPP Kab. Aceh Besar
                         </h1>

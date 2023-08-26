@@ -1,5 +1,5 @@
 import React from "react";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 
 import {
     Card,
@@ -13,15 +13,19 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 function Login() {
+    const { mpp } = usePage().props;
+
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
         remember: false,
     });
+
+    const [showPassword, setShowPassword] = React.useState(false);
 
     React.useEffect(() => {
         return () => {
@@ -43,7 +47,7 @@ function Login() {
                         <CardTitle className="flex flex-col items-center justify-center">
                             <Link href={route("home")}>
                                 <img
-                                    src="/logo.png"
+                                    src={`/storage/${mpp.logo}`}
                                     alt="Logo"
                                     className="w-32 h-32 rounded-full"
                                 />
@@ -75,17 +79,38 @@ function Login() {
                             {/* password */}
                             <div>
                                 <Label htmlFor="password">Password</Label>
-                                <Input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    placeholder="••••••••"
-                                    autoComplete="current-password"
-                                    value={data.password}
-                                    onChange={(e) =>
-                                        setData("password", e.target.value)
-                                    }
-                                />
+                                <div className="relative">
+                                    <Input
+                                        id="password"
+                                        name="password"
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
+                                        placeholder="••••••••"
+                                        autoComplete="current-password"
+                                        value={data.password}
+                                        onChange={(e) =>
+                                            setData("password", e.target.value)
+                                        }
+                                    />
+                                    <button
+                                        type="button"
+                                        id="showPassword"
+                                        name="showPassword"
+                                        aria-label="showPassword"
+                                        className="absolute inset-y-0 right-0 flex items-center p-3 text-white rounded-tr-md rounded-br-md bg-primary"
+                                        onClick={() =>
+                                            setShowPassword(!showPassword)
+                                        }
+                                    >
+                                        {showPassword ? (
+                                            <EyeOff className="w-4 h-4" />
+                                        ) : (
+                                            <Eye className="w-4 h-4" />
+                                        )}
+                                    </button>
+                                </div>
+
                                 <InputError message={errors.password} />
                             </div>
 

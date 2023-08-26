@@ -1,7 +1,46 @@
 import React from "react";
+import { usePage } from "@inertiajs/react";
+import Swal from "sweetalert2";
 
-function AuthLayout() {
-    return <div>AuthLayout</div>;
+import Sidebar from "@/components/sidebar";
+import Topbar from "@/components/topbar";
+
+function AuthLayout({ children }) {
+    const { sessions } = usePage().props;
+
+    React.useEffect(() => {
+        if (sessions?.success) {
+            Swal.fire({
+                icon: "success",
+                title: "Berhasil",
+                text: sessions.success,
+                showConfirmButton: true,
+                confirmButtonColor: "#2c6beb",
+            });
+        }
+
+        if (sessions?.error) {
+            Swal.fire({
+                icon: "error",
+                title: "Gagal",
+                text: sessions.error,
+                showConfirmButton: true,
+                confirmButtonColor: "2c6beb",
+            });
+        }
+    }, [sessions]);
+
+    return (
+        <div className="relative h-full">
+            <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-[80]">
+                <Sidebar />
+            </div>
+            <main className="md:pl-72">
+                <Topbar />
+                <div className="m-5">{children}</div>
+            </main>
+        </div>
+    );
 }
 
 export default AuthLayout;
