@@ -22,7 +22,7 @@ class MppController extends Controller
         $request->validate([
             'deskripsi_mpp' => 'required',
             'kenapa_harus_mpp' => 'required',
-            'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $mpp = Mpp::first();

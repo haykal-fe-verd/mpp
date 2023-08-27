@@ -14,9 +14,9 @@ class MppSeeder extends Seeder
     public function run(): void
     {
         Mpp::create([
-            "deskripsi_mpp" => "Ini adalah deskripsi mpp",
-            "kenapa_harus_mpp" => "Ini adalah kenapa harus mpp",
-            "logo" => "test",
+            "deskripsi_mpp" => "Mal Pelayanan Publik adalah tempat berlangsungnya kegiatan atau aktivitas penyelenggaraan pelayanan publik atas barang,jasa dan/atau pelayanan administrasi yang merupakan perluasan fungsi pelayanan terpadu baik pusat maupun daerah, serta pelayanan Badan Usaha Milik Negara/Badan Usaha Milik Daerah dan Swasta dalam rangka menyediakan pelayanan yang cepat, mudah, terjangkau, aman dan nyaman",
+            "kenapa_harus_mpp" => "Efisien Pelayanan agar lebih cepat, Penghematan waktu dan biaya untuk masyarakat, Jarak yang terjangkau oleh masyarakat, Standarisasi Pelayanan Publik untuk semua",
+            "logo" => "logo/QzKaBnDNDO4LHKdQbj5mQmsJCudH85WuuWcI9IXk.png",
         ]);
     }
 }

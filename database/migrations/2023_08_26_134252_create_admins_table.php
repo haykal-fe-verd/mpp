@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('tempat_lahir');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('no_hp');
-            $table->string('umur');
+            $table->integer('umur');
             $table->text('alamat');
 
             $table->unsignedBigInteger('user_id');

@@ -51,7 +51,7 @@ function Topbar() {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <Link
-                                // href={route("profile.edit")}
+                                href={route("profile.edit")}
                                 className="flex items-center gap-x-3"
                             >
                                 <User className="w-4 h-4" />
@@ -60,7 +60,7 @@ function Topbar() {
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <Link
-                                // href={route("password.index")}
+                                href={route("password.index")}
                                 className="flex items-center gap-x-3"
                             >
                                 <Settings className="w-4 h-4" />
