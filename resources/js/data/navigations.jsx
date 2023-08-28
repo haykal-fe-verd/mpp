@@ -5,6 +5,7 @@ import {
     Clapperboard,
     Cog,
     LayoutDashboard,
+    Newspaper,
     Scale3d,
     Settings,
     ShieldCheck,
@@ -19,6 +20,12 @@ export const navigations = [
         href: route("dashboard"),
         icon: LayoutDashboard,
         role: ["admin", "masyarakat"],
+    },
+    {
+        label: "Berita",
+        href: route("berita.index"),
+        icon: Newspaper,
+        role: ["admin"],
     },
     {
         label: "Pengumuman",

@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             MppSeeder::class,
             PengumumanSeeder::class,
+            BeritaSeeder::class
         ]);
     }
 }

@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 
 function Pengumuman() {
     const { pengumuman } = usePage().props;
-    console.log("🚀  pengumuman:", pengumuman);
     const { data, setData, post, processing, errors } = useForm({
         pengumuman: pengumuman?.pengumuman ?? "",
     });

@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MppController;
 use App\Http\Controllers\PengumumanController;
@@ -71,6 +72,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // pengumuman
         Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman.index');
         Route::post('/pengumuman', [PengumumanController::class, 'store'])->name('pengumuman.store');
+
+        // berita
+        Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
+        Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store');
+        Route::post('/berita/{slug}', [BeritaController::class, 'update'])->name('berita.update');
+        Route::delete('/berita/{slug}', [BeritaController::class, 'destroy'])->name('berita.destroy');
     });
 
     // masyarakat

@@ -57,3 +57,8 @@
         @apply bg-slate-100 text-foreground;
     }
 }
+
+.ql-editor {
+    overflow-y: scroll;
+    resize: vertical;
+}
