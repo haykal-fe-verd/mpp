@@ -48,7 +48,7 @@ export default function VerifyEmail({ status }) {
                         <CardTitle className="flex flex-col items-center justify-center">
                             <Link href={route("home")}>
                                 <img
-                                    src={`/storage/${mpp.logo}`}
+                                    src={`/storage/${mpp?.logo}`}
                                     alt="Logo"
                                     className="w-32 h-32"
                                 />

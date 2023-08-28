@@ -10,6 +10,7 @@ import {
     ShieldCheck,
     Siren,
     Stethoscope,
+    Volume2,
 } from "lucide-react";
 
 export const navigations = [
@@ -18,6 +19,12 @@ export const navigations = [
         href: route("dashboard"),
         icon: LayoutDashboard,
         role: ["admin", "masyarakat"],
+    },
+    {
+        label: "Pengumuman",
+        href: route("pengumuman.index"),
+        icon: Volume2,
+        role: ["admin"],
     },
     {
         label: "Setting MPP",

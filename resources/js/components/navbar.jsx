@@ -34,7 +34,7 @@ function Navbar() {
                             className="w-8 h-9"
                         />
                         <img
-                            src={`/storage/${mpp.logo}`}
+                            src={`/storage/${mpp?.logo}`}
                             alt="Logo"
                             className="w-10 h-10"
                         />

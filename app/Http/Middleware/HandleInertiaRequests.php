@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Mpp;
+use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -46,6 +47,7 @@ class HandleInertiaRequests extends Middleware
                 'error' => session('error'),
             ],
             'mpp' => Mpp::first(),
+            'pengumuman' => Pengumuman::first(),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),

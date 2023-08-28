@@ -14,8 +14,8 @@ function SettingMpp() {
     const { mpp } = usePage().props;
 
     const { data, setData, post, processing, errors } = useForm({
-        deskripsi_mpp: mpp.deskripsi_mpp || "",
-        kenapa_harus_mpp: mpp.kenapa_harus_mpp || "",
+        deskripsi_mpp: mpp?.deskripsi_mpp ?? "",
+        kenapa_harus_mpp: mpp?.kenapa_harus_mpp ?? "",
         logo: "",
     });
 
@@ -100,7 +100,7 @@ function SettingMpp() {
 
                         <div className="flex items-center justify-center col-span-2 lg:col-span-1">
                             <img
-                                src={`/storage/${mpp.logo}`}
+                                src={`/storage/${mpp?.logo}`}
                                 alt="logo"
                                 className="rounded-full h-52 w-52"
                             />

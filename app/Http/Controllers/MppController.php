@@ -27,19 +27,35 @@ class MppController extends Controller
 
         $mpp = Mpp::first();
 
-        if ($request->hasFile('logo')) {
-            $oldLogoPath = $mpp->logo;
-            if ($oldLogoPath) {
-                Storage::disk('public')->delete($oldLogoPath);
+        if ($mpp) {
+            if ($request->hasFile('logo')) {
+                $oldLogoPath = $mpp->logo;
+                if ($oldLogoPath) {
+                    Storage::disk('public')->delete($oldLogoPath);
+                }
+
+                $logoPath = $request->file('logo')->store('logo', 'public');
+                $mpp->logo = $logoPath;
             }
 
-            $logoPath = $request->file('logo')->store('logo', 'public');
-            $mpp->logo = $logoPath;
-        }
+            $mpp->deskripsi_mpp = $request->input('deskripsi_mpp');
+            $mpp->kenapa_harus_mpp = $request->input('kenapa_harus_mpp');
+            $mpp->save();
+        } else {
+            $mpp = new Mpp();
+            if ($request->hasFile('logo')) {
+                $oldLogoPath = $mpp->logo;
+                if ($oldLogoPath) {
+                    Storage::disk('public')->delete($oldLogoPath);
+                }
 
-        $mpp->deskripsi_mpp = $request->input('deskripsi_mpp');
-        $mpp->kenapa_harus_mpp = $request->input('kenapa_harus_mpp');
-        $mpp->save();
+                $logoPath = $request->file('logo')->store('logo', 'public');
+                $mpp->logo = $logoPath;
+            }
+            $mpp->deskripsi_mpp = $request->input('deskripsi_mpp');
+            $mpp->kenapa_harus_mpp = $request->input('kenapa_harus_mpp');
+            $mpp->save();
+        }
 
         return redirect()->route('mpp.index')->with('success', 'Setting MPP Berhasil di update');
     }

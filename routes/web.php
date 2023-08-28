@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MppController;
+use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +67,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // setting mpp
         Route::get('/setting-mpp', [MppController::class, 'index'])->name('mpp.index');
         Route::post('/setting-mpp', [MppController::class, 'store'])->name('mpp.store');
+
+        // pengumuman
+        Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman.index');
+        Route::post('/pengumuman', [PengumumanController::class, 'store'])->name('pengumuman.store');
     });
 
     // masyarakat

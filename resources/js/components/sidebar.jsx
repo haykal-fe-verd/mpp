@@ -22,7 +22,7 @@ function Sidebar() {
                     className="flex flex-col items-center justify-center text-center"
                 >
                     <img
-                        src={`/storage/${mpp.logo}`}
+                        src={`/storage/${mpp?.logo}`}
                         loading="lazy"
                         className="relative rounded-full w-44 h-44"
                     />

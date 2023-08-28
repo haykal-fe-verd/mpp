@@ -13,7 +13,7 @@ function About() {
                 <div className="flex flex-col items-center justify-between lg:flex-row">
                     <div className="w-full h-full">
                         <img
-                            src={`/storage/${mpp.logo}`}
+                            src={`/storage/${mpp?.logo}`}
                             alt="Logo"
                             className="w-[300px] h-[300px]"
                         />
