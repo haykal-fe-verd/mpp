@@ -1,16 +1,8 @@
 import {
-    ActivitySquareIcon,
-    BedIcon,
-    Bitcoin,
-    Clapperboard,
-    Cog,
     LayoutDashboard,
     Newspaper,
-    Scale3d,
+    ServerCog,
     Settings,
-    ShieldCheck,
-    Siren,
-    Stethoscope,
     Volume2,
 } from "lucide-react";
 
@@ -20,6 +12,12 @@ export const navigations = [
         href: route("dashboard"),
         icon: LayoutDashboard,
         role: ["admin", "masyarakat"],
+    },
+    {
+        label: "Instansi",
+        href: route("instansi.index"),
+        icon: ServerCog,
+        role: ["admin"],
     },
     {
         label: "Berita",

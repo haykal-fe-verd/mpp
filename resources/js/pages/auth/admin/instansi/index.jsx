@@ -1,6 +1,7 @@
 import React from "react";
 import { Head, useForm, usePage } from "@inertiajs/react";
 import {
+    EyeIcon,
     MoreHorizontal,
     MoreVertical,
     PencilIcon,
@@ -24,37 +25,47 @@ import { cn } from "@/lib/utils";
 import { Dialog } from "@/components/ui/dialog";
 import Modal from "./modal";
 
-function Berita() {
-    const { berita } = usePage().props;
-    console.log("🚀  berita:", berita);
+function Instansi() {
+    const { instansi } = usePage().props;
     const [openModal, setOpenModal] = React.useState(false);
     const [isEdit, setIsEdit] = React.useState(false);
+    const [isDetail, setIsDetail] = React.useState(false);
+    const [detailData, setDetailData] = React.useState(null);
 
     const {
         data,
         setData,
         post,
-        put,
         processing,
         errors,
         delete: destroy,
         reset,
     } = useForm({
-        judul: "",
-        isi: "",
-        thumbnail: "",
+        id: "",
+        nama_instansi: "",
+        profil_instansi: "",
+        telepon: "",
+        email: "",
+        faks: "",
+        website: "",
+        alamat: "",
+        logo: "",
     });
 
     const onSubmit = (e) => {
         e.preventDefault();
         if (isEdit) {
-            post(route("berita.update", data.slug), {
+            post(route("instansi.update", data.id), {
                 onSuccess: () => {
-                    setOpenModal(false), setIsEdit(false), reset();
+                    setOpenModal(false),
+                        setIsEdit(false),
+                        setIsDetail(false),
+                        setDetailData(null),
+                        reset();
                 },
             });
         } else {
-            post(route("berita.store"), {
+            post(route("instansi.store"), {
                 onSuccess: () => {
                     setOpenModal(false), reset();
                 },
@@ -66,11 +77,22 @@ function Berita() {
         setIsEdit(true);
         setOpenModal(true);
         setData({
-            slug: item.slug,
-            judul: item.judul,
-            isi: item.isi,
-            thumbnail: item.thumbnail,
+            id: item.id,
+            nama_instansi: item.nama_instansi,
+            profil_instansi: item.profil_instansi,
+            telepon: item.telepon,
+            email: item.email,
+            faks: item.faks,
+            website: item.website,
+            alamat: item.alamat,
+            logo: item.logo,
         });
+    };
+
+    const handleDetail = (item) => {
+        setIsDetail(true);
+        setDetailData(item);
+        // setOpenModal(true);
     };
 
     const handleDelete = (item) => {
@@ -83,7 +105,7 @@ function Berita() {
             cancelButtonText: "Tidak",
         }).then((result) => {
             if (result.isConfirmed) {
-                destroy(route("berita.destroy", item.slug));
+                destroy(route("instansi.destroy", item.id));
                 reset();
             }
         });
@@ -91,9 +113,10 @@ function Berita() {
 
     const header = [
         { name: "#", className: "w-10 text-center" },
-        { name: "Judul", className: "" },
-        { name: "Isi", className: "" },
-        { name: "Thubmnail", className: "" },
+        { name: "Nama Instansi", className: "" },
+        { name: "Telepon", className: "" },
+        { name: "Alamat", className: "" },
+        { name: "Logo", className: "" },
         { name: <MoreHorizontal />, className: "text-center" },
     ];
 
@@ -105,15 +128,17 @@ function Berita() {
                     setOpenModal(isOpen);
                     if (!isOpen) {
                         setIsEdit(false);
+                        setIsDetail(false);
+                        setDetailData(null);
                         reset();
                     }
                 }}
             >
-                <Head title="Berita" />
+                <Head title="Instansi" />
                 <div className="w-full p-5 space-y-4 bg-white rounded-md shadow-md">
                     <div>
                         <h2 className="text-2xl font-bold md:text-4xl">
-                            Berita
+                            Instansi
                         </h2>
                     </div>
                     <Separator />
@@ -123,37 +148,27 @@ function Berita() {
                         onClick={() => setOpenModal(true)}
                     >
                         <PlusCircle className="w-5 h-5" />
-                        <span>Tambah Berita</span>
+                        <span>Tambah Instansi</span>
                     </Button>
 
                     <DataTable
-                        data={berita}
+                        data={instansi}
                         header={header}
-                        link={"berita.index"}
+                        link={"instansi.index"}
                     >
-                        {berita.data.length !== 0 ? (
-                            berita.data.map((item, index) => (
-                                <TableRow key={berita.from + index}>
+                        {instansi.data.length !== 0 ? (
+                            instansi.data.map((item, index) => (
+                                <TableRow key={instansi.from + index}>
                                     <TableCell className="text-center">
-                                        {berita.from + index}
+                                        {instansi.from + index}
                                     </TableCell>
-                                    <TableCell>{item.judul}</TableCell>
-                                    <TableCell>
-                                        <p
-                                            className="text-justify"
-                                            dangerouslySetInnerHTML={{
-                                                __html:
-                                                    item.isi.substring(0, 200) +
-                                                    (item.isi.length > 200
-                                                        ? "..."
-                                                        : ""),
-                                            }}
-                                        />
-                                    </TableCell>
+                                    <TableCell>{item.nama_instansi}</TableCell>
+                                    <TableCell>{item.telepon}</TableCell>
+                                    <TableCell>{item.alamat}</TableCell>
                                     <TableCell>
                                         <img
-                                            src={`/storage/${item.thumbnail}`}
-                                            alt="Thumbnail"
+                                            src={`/storage/${item.logo}`}
+                                            alt="LogoInstansi"
                                             className="object-cover w-20 h-20 rounded-md shadow-lg"
                                         />
                                     </TableCell>
@@ -163,6 +178,14 @@ function Berita() {
                                                 <MoreVertical className="w-5 h-5" />
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
+                                                <DropdownMenuItem
+                                                    onClick={() =>
+                                                        handleDetail(item)
+                                                    }
+                                                >
+                                                    <EyeIcon className="w-4 h-4 mr-3" />
+                                                    <span>Detail</span>
+                                                </DropdownMenuItem>
                                                 <DropdownMenuItem
                                                     onClick={() =>
                                                         handleEdit(item)
@@ -211,4 +234,4 @@ function Berita() {
     );
 }
 
-export default Berita;
+export default Instansi;

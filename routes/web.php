@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InstansiController;
 use App\Http\Controllers\MppController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\ProfileController;
@@ -78,6 +79,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store');
         Route::post('/berita/{slug}', [BeritaController::class, 'update'])->name('berita.update');
         Route::delete('/berita/{slug}', [BeritaController::class, 'destroy'])->name('berita.destroy');
+
+        // instansi
+        Route::get('/instansi', [InstansiController::class, 'index'])->name('instansi.index');
+        Route::post('/instansi', [InstansiController::class, 'store'])->name('instansi.store');
+        Route::post('/instansi/{id}', [InstansiController::class, 'update'])->name('instansi.update');
+        Route::delete('/instansi/{id}', [InstansiController::class, 'destroy'])->name('instansi.destroy');
     });
 
     // masyarakat
