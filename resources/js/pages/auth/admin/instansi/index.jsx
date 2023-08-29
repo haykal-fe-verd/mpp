@@ -1,5 +1,5 @@
 import React from "react";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import {
     EyeIcon,
     MoreHorizontal,
@@ -29,8 +29,6 @@ function Instansi() {
     const { instansi } = usePage().props;
     const [openModal, setOpenModal] = React.useState(false);
     const [isEdit, setIsEdit] = React.useState(false);
-    const [isDetail, setIsDetail] = React.useState(false);
-    const [detailData, setDetailData] = React.useState(null);
 
     const {
         data,
@@ -57,11 +55,7 @@ function Instansi() {
         if (isEdit) {
             post(route("instansi.update", data.id), {
                 onSuccess: () => {
-                    setOpenModal(false),
-                        setIsEdit(false),
-                        setIsDetail(false),
-                        setDetailData(null),
-                        reset();
+                    setOpenModal(false), setIsEdit(false), reset();
                 },
             });
         } else {
@@ -89,12 +83,6 @@ function Instansi() {
         });
     };
 
-    const handleDetail = (item) => {
-        setIsDetail(true);
-        setDetailData(item);
-        // setOpenModal(true);
-    };
-
     const handleDelete = (item) => {
         Swal.fire({
             title: "Apakah anda ingin menghapus data?",
@@ -117,7 +105,7 @@ function Instansi() {
         { name: "Telepon", className: "" },
         { name: "Alamat", className: "" },
         { name: "Logo", className: "" },
-        { name: <MoreHorizontal />, className: "text-center" },
+        { name: "@", className: "text-center" },
     ];
 
     return (
@@ -128,8 +116,6 @@ function Instansi() {
                     setOpenModal(isOpen);
                     if (!isOpen) {
                         setIsEdit(false);
-                        setIsDetail(false);
-                        setDetailData(null);
                         reset();
                     }
                 }}
@@ -178,13 +164,17 @@ function Instansi() {
                                                 <MoreVertical className="w-5 h-5" />
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
-                                                <DropdownMenuItem
-                                                    onClick={() =>
-                                                        handleDetail(item)
-                                                    }
-                                                >
-                                                    <EyeIcon className="w-4 h-4 mr-3" />
-                                                    <span>Detail</span>
+                                                <DropdownMenuItem>
+                                                    <Link
+                                                        href={route(
+                                                            "instansi.show",
+                                                            item.id
+                                                        )}
+                                                        className="flex items-center"
+                                                    >
+                                                        <EyeIcon className="w-4 h-4 mr-3" />
+                                                        <span>Detail</span>
+                                                    </Link>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem
                                                     onClick={() =>

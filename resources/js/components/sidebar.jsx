@@ -14,6 +14,8 @@ function Sidebar() {
         (route) => !route.role || route.role.includes(role)
     );
 
+    const currentPath = window.location.pathname;
+
     return (
         <div className="flex flex-col h-full py-4 space-y-4 text-white bg-slate-900 ">
             <div className="flex-1 px-3 py-2">
@@ -45,7 +47,8 @@ function Sidebar() {
                                 href={route.href}
                                 className={cn(
                                     "flex justify-start w-full p-3 text-sm font-medium transition duration-100 rounded-lg cursor-pointer group hover:text-white hover:bg-primary/10",
-                                    ziggy.location === route.href
+                                    ziggy.location === route.href ||
+                                        ziggy.location.includes(route.href)
                                         ? "text-white bg-primary"
                                         : "text-zinc-400"
                                 )}

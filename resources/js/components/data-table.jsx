@@ -59,42 +59,44 @@ function DataTable({ data, header, link, children }) {
     return (
         <div className="rounded-md">
             {/* search */}
-            <div className="flex flex-col items-start justify-between mb-5 space-y-5 md:items-center md:space-y-0 md:flex-row">
-                <div className="flex items-center">
-                    <span className="mr-2">Show</span>
-                    <Select
-                        name="perpage"
-                        id="perpage"
-                        onValueChange={handlePerPageChange}
-                        defaultValue={perpage.current}
-                    >
-                        <SelectTrigger className="w-20 bg-white">
-                            <SelectValue placeholder={perpage.current} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value={10}>10</SelectItem>
-                            <SelectItem value={50}>50</SelectItem>
-                            <SelectItem value={100}>100</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <span className="ml-2">Entries</span>
-                </div>
-
-                <div className="relative w-full rounded-md md:w-1/3">
-                    <div className="absolute inset-y-0 left-0 flex items-center p-3 pointer-events-none rounded-tl-md rounded-bl-md bg-primary">
-                        <Search className="text-white" />
+            {link ? (
+                <div className="flex flex-col items-start justify-between mb-5 space-y-5 md:items-center md:space-y-0 md:flex-row">
+                    <div className="flex items-center">
+                        <span className="mr-2">Show</span>
+                        <Select
+                            name="perpage"
+                            id="perpage"
+                            onValueChange={handlePerPageChange}
+                            defaultValue={perpage.current}
+                        >
+                            <SelectTrigger className="w-20 bg-white">
+                                <SelectValue placeholder={perpage.current} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value={10}>10</SelectItem>
+                                <SelectItem value={50}>50</SelectItem>
+                                <SelectItem value={100}>100</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        <span className="ml-2">Entries</span>
                     </div>
-                    <Input
-                        name="search"
-                        id="search"
-                        autoComplete="search"
-                        type="search"
-                        placeholder="Search something..."
-                        className="pl-14"
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+
+                    <div className="relative w-full rounded-md md:w-1/3">
+                        <div className="absolute inset-y-0 left-0 flex items-center p-3 pointer-events-none rounded-tl-md rounded-bl-md bg-primary">
+                            <Search className="text-white" />
+                        </div>
+                        <Input
+                            name="search"
+                            id="search"
+                            autoComplete="search"
+                            type="search"
+                            placeholder="Search something..."
+                            className="pl-14"
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </div>
                 </div>
-            </div>
+            ) : null}
 
             {/* table */}
             <div className="border rounded-md">
@@ -131,17 +133,19 @@ function DataTable({ data, header, link, children }) {
             </div>
 
             {/* pagination */}
-            <div className="flex flex-col items-center justify-between w-full mt-5 md:flex-row">
-                <div>
-                    showing
-                    <span className="font-bold"> {data.from}</span> to
-                    <span className="font-bold"> {data.to} </span>
-                    of
-                    <span className="font-bold"> {data.total} </span>
-                    results
+            {link ? (
+                <div className="flex flex-col items-center justify-between w-full mt-5 md:flex-row">
+                    <div>
+                        showing
+                        <span className="font-bold"> {data.from}</span> to
+                        <span className="font-bold"> {data.to} </span>
+                        of
+                        <span className="font-bold"> {data.total} </span>
+                        results
+                    </div>
+                    <Pagination links={data.links} />
                 </div>
-                <Pagination links={data.links} />
-            </div>
+            ) : null}
         </div>
     );
 }

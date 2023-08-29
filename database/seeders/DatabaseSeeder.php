@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             MppSeeder::class,
             PengumumanSeeder::class,
             BeritaSeeder::class,
-            InstansiSeeder::class
+            InstansiSeeder::class,
+            LayananSeeder::class
         ]);
     }
 }

@@ -29,6 +29,12 @@ class InstansiController extends Controller
         return Inertia::render('auth/admin/instansi/index', compact('instansi'));
     }
 
+    public function show(Request $request, string $id): Response
+    {
+        $instansi = Instansi::with('layanan')->findOrFail($id);
+        return Inertia::render('auth/admin/instansi/detail', compact('instansi'));
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $request->validate([

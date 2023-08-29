@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstansiController;
+use App\Http\Controllers\LayananController;
 use App\Http\Controllers\MppController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\ProfileController;
@@ -82,9 +83,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // instansi
         Route::get('/instansi', [InstansiController::class, 'index'])->name('instansi.index');
+        Route::get('/instansi/{id}', [InstansiController::class, 'show'])->name('instansi.show');
         Route::post('/instansi', [InstansiController::class, 'store'])->name('instansi.store');
         Route::post('/instansi/{id}', [InstansiController::class, 'update'])->name('instansi.update');
         Route::delete('/instansi/{id}', [InstansiController::class, 'destroy'])->name('instansi.destroy');
+
+        // layanan
+        Route::post('/layanan', [LayananController::class, 'store'])->name('layanan.store');
+        Route::put('/layanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
+        Route::delete('/layanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
     });
 
     // masyarakat
