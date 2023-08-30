@@ -31,9 +31,15 @@ class InstansiController extends Controller
 
     public function show(Request $request, string $id): Response
     {
-        $instansi = Instansi::with('layanan')->findOrFail($id);
+        $instansi = Instansi::with(['layanan' => function ($query) {
+            $query->orderBy('created_at', 'desc')->with(['persyaratan' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }]);
+        }])->findOrFail($id);
+
         return Inertia::render('auth/admin/instansi/detail', compact('instansi'));
     }
+
 
     public function store(Request $request): RedirectResponse
     {

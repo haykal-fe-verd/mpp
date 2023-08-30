@@ -26,7 +26,6 @@ import Modal from "./modal";
 
 function Berita() {
     const { berita } = usePage().props;
-    console.log("🚀  berita:", berita);
     const [openModal, setOpenModal] = React.useState(false);
     const [isEdit, setIsEdit] = React.useState(false);
 
@@ -94,7 +93,7 @@ function Berita() {
         { name: "Judul", className: "" },
         { name: "Isi", className: "" },
         { name: "Thubmnail", className: "" },
-        { name: <MoreHorizontal />, className: "text-center" },
+        { name: "@", className: "text-center" },
     ];
 
     return (

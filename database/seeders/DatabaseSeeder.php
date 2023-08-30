@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             PengumumanSeeder::class,
             BeritaSeeder::class,
             InstansiSeeder::class,
-            LayananSeeder::class
+            LayananSeeder::class,
+            PersyaratanSeeder::class
+
         ]);
     }
 }

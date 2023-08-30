@@ -9,6 +9,7 @@ import InputError from "@/components/input-error";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ReactQuill from "react-quill";
 
 function Pengumuman() {
     const { pengumuman } = usePage().props;
@@ -39,14 +40,10 @@ function Pengumuman() {
                                 <Label htmlFor="pengumuman">
                                     Isi Pengumuman
                                 </Label>
-                                <Textarea
-                                    id="pengumuman"
-                                    name="pengumuman"
-                                    className="mt-2"
+                                <ReactQuill
+                                    theme="snow"
                                     value={data.pengumuman}
-                                    onChange={(e) =>
-                                        setData("pengumuman", e.target.value)
-                                    }
+                                    onChange={(e) => setData("pengumuman", e)}
                                 />
                                 <InputError message={errors.pengumuman} />
                             </div>

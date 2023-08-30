@@ -27,6 +27,7 @@ import ModalLayanan from "./modal-layanan";
 function DetailInstansi({ instansi }) {
     const [openModal, setOpenModal] = React.useState(false);
     const [isEdit, setIsEdit] = React.useState(false);
+    const [persyaratan, setPersyaratan] = React.useState([""]);
 
     const {
         data,
@@ -42,6 +43,7 @@ function DetailInstansi({ instansi }) {
         instansi_id: instansi.id,
         nama_layanan: "",
         deskripsi_layanan: "",
+        nama_persyaratan: [],
     });
 
     const onSubmit = (e) => {
@@ -49,13 +51,16 @@ function DetailInstansi({ instansi }) {
         if (isEdit) {
             put(route("layanan.update", data.id), {
                 onSuccess: () => {
-                    setOpenModal(false), setIsEdit(false), reset();
+                    setOpenModal(false),
+                        setIsEdit(false),
+                        setPersyaratan([""]),
+                        reset();
                 },
             });
         } else {
             post(route("layanan.store"), {
                 onSuccess: () => {
-                    setOpenModal(false), reset();
+                    setOpenModal(false), setPersyaratan([""]), reset();
                 },
             });
         }
@@ -69,7 +74,11 @@ function DetailInstansi({ instansi }) {
             instansi_id: item.instansi_id,
             nama_layanan: item.nama_layanan,
             deskripsi_layanan: item.deskripsi_layanan,
+            nama_persyaratan: item.persyaratan.map(
+                (item) => item.nama_persyaratan
+            ),
         });
+        setPersyaratan(item.persyaratan.map((item) => item.nama_persyaratan));
     };
 
     const handleDelete = (item) => {
@@ -101,6 +110,8 @@ function DetailInstansi({ instansi }) {
                 onOpenChange={(isOpen) => {
                     setOpenModal(isOpen);
                     if (!isOpen) {
+                        setIsEdit(false);
+                        setPersyaratan([""]);
                         reset();
                     }
                 }}
@@ -241,6 +252,8 @@ function DetailInstansi({ instansi }) {
                     data={data}
                     errors={errors}
                     processing={processing}
+                    persyaratan={persyaratan}
+                    setPersyaratan={setPersyaratan}
                 />
             </Dialog>
         </AuthLayout>
