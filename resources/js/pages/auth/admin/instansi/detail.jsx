@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    EyeIcon,
     MoreHorizontal,
     MoreVertical,
     PencilIcon,
@@ -11,7 +12,12 @@ import AuthLayout from "@/layouts/AuthLayout";
 import { Head, useForm } from "@inertiajs/react";
 import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Dialog } from "@/components/ui/dialog";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import DataTable from "@/components/data-table";
@@ -27,6 +33,8 @@ import ModalLayanan from "./modal-layanan";
 function DetailInstansi({ instansi }) {
     const [openModal, setOpenModal] = React.useState(false);
     const [isEdit, setIsEdit] = React.useState(false);
+    const [isShow, setIsShow] = React.useState(false);
+    const [showData, setShowData] = React.useState(null);
     const [persyaratan, setPersyaratan] = React.useState([""]);
 
     const {
@@ -64,6 +72,12 @@ function DetailInstansi({ instansi }) {
                 },
             });
         }
+    };
+
+    const handleShow = (item) => {
+        setIsShow(true);
+        setShowData(item);
+        setOpenModal(true);
     };
 
     const handleEdit = (item) => {
@@ -112,6 +126,8 @@ function DetailInstansi({ instansi }) {
                     if (!isOpen) {
                         setIsEdit(false);
                         setPersyaratan([""]);
+                        setIsShow(false);
+                        setShowData(null);
                         reset();
                     }
                 }}
@@ -211,6 +227,14 @@ function DetailInstansi({ instansi }) {
                                                 <DropdownMenuContent>
                                                     <DropdownMenuItem
                                                         onClick={() =>
+                                                            handleShow(item)
+                                                        }
+                                                    >
+                                                        <EyeIcon className="w-4 h-4 mr-3" />
+                                                        <span>Lihat</span>
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem
+                                                        onClick={() =>
                                                             handleEdit(item)
                                                         }
                                                     >
@@ -244,17 +268,32 @@ function DetailInstansi({ instansi }) {
                     </div>
                 </div>
 
-                {/* form */}
-                <ModalLayanan
-                    isEdit={isEdit}
-                    onSubmit={onSubmit}
-                    setData={setData}
-                    data={data}
-                    errors={errors}
-                    processing={processing}
-                    persyaratan={persyaratan}
-                    setPersyaratan={setPersyaratan}
-                />
+                {/* modal */}
+                {isShow ? (
+                    <DialogContent className="lg:max-w-5xl">
+                        <DialogHeader>
+                            <DialogTitle>
+                                Detail Layanan & Persyaratan
+                                <Separator className="my-5" />
+                            </DialogTitle>
+                            <div className="flex flex-col justify-between lg:flex-row">
+                                <div>Layanan</div>
+                                <div>Persyaratan</div>
+                            </div>
+                        </DialogHeader>
+                    </DialogContent>
+                ) : (
+                    <ModalLayanan
+                        isEdit={isEdit}
+                        onSubmit={onSubmit}
+                        setData={setData}
+                        data={data}
+                        errors={errors}
+                        processing={processing}
+                        persyaratan={persyaratan}
+                        setPersyaratan={setPersyaratan}
+                    />
+                )}
             </Dialog>
         </AuthLayout>
     );

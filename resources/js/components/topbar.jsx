@@ -25,7 +25,7 @@ function Topbar() {
             showCancelButton: true,
             confirmButtonText: "Logout",
             cancelButtonText: "Tidak",
-            confirmButtonColor: "#0f172a",
+            confirmButtonColor: "#2c6beb",
         }).then((result) => {
             if (result.isConfirmed) {
                 post(route("logout"));

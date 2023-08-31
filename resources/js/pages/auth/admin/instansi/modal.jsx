@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import { Loader2 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 function Modal({ isEdit, onSubmit, setData, data, errors, processing }) {
     const handleThumbnailChange = (e) => {
