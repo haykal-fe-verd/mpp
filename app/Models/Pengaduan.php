@@ -5,24 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Layanan extends Model
+class Pengaduan extends Model
 {
     use HasFactory;
 
-    protected $table = "tb_layanan";
+    protected $table = "tb_pengaduan";
     protected $primaryKey = 'id';
     protected $guarded = [];
-    protected $with = ['persyaratan'];
 
     public function instansi(): BelongsTo
     {
         return $this->belongsTo(Instansi::class);
-    }
-
-    public function persyaratan(): HasMany
-    {
-        return $this->hasMany(Persyaratan::class);
     }
 }

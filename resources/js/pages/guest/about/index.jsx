@@ -21,16 +21,24 @@ function About() {
 
                     <div className="w-full h-full">
                         <h1 className="text-4xl font-semibold">Apa itu MPP?</h1>
-                        <p className="mt-10 text-justify">
-                            {mpp.deskripsi_mpp}
-                        </p>
+                        <article
+                            className="mt-10 text-justify"
+                            dangerouslySetInnerHTML={{
+                                __html: mpp.deskripsi_mpp,
+                            }}
+                        />
                     </div>
                 </div>
                 <div className="w-full mt-20">
                     <h1 className="text-4xl font-semibold">
                         Kenapa harus MPP?
                     </h1>
-                    <p className="mt-10 text-justify">{mpp.kenapa_harus_mpp}</p>
+                    <article
+                        className="mt-10 text-justify"
+                        dangerouslySetInnerHTML={{
+                            __html: mpp.kenapa_harus_mpp,
+                        }}
+                    />
                 </div>
             </div>
             <div className="mt-20 bg-primary">

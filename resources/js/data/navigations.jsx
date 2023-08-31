@@ -1,4 +1,5 @@
 import {
+    Beef,
     LayoutDashboard,
     Newspaper,
     ServerCog,
@@ -17,6 +18,12 @@ export const navigations = [
         label: "Instansi",
         href: route("instansi.index"),
         icon: ServerCog,
+        role: ["admin"],
+    },
+    {
+        label: "Pengaduan",
+        href: route("pengaduan.admin.index"),
+        icon: Beef,
         role: ["admin"],
     },
     {

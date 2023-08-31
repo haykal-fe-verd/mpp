@@ -1,5 +1,6 @@
 import React from "react";
 import { usePage } from "@inertiajs/react";
+import Swal from "sweetalert2";
 
 import Navbar from "@/components/navbar";
 

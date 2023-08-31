@@ -1,5 +1,7 @@
 import React from "react";
 import { Head, useForm, usePage } from "@inertiajs/react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 import AuthLayout from "@/layouts/AuthLayout";
 import { Separator } from "@/components/ui/separator";
@@ -9,7 +11,6 @@ import InputError from "@/components/input-error";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import ReactQuill from "react-quill";
 
 function Pengumuman() {
     const { pengumuman } = usePage().props;

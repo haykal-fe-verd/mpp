@@ -13,6 +13,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstansiController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\MppController;
+use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -24,6 +25,10 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 
 // tentang mpp
 Route::get('/tentang-mpp', [HomeController::class, 'about'])->name('about');
+
+// pengaduan
+Route::get('/pengaduan', [HomeController::class, 'pengaduan'])->name('pengaduan.index');
+Route::post('/pengaduan', [PengaduanController::class, 'store'])->middleware('throttle:1,1')->name('pengaduan.store');
 
 // guest
 Route::middleware('guest')->group(function () {
@@ -43,10 +48,6 @@ Route::middleware('guest')->group(function () {
 });
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('auth/dashboard/index');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 // auth
 Route::middleware(['auth', 'verified'])->group(function () {
     // logout
@@ -65,33 +66,43 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
 
+    // dashboard
+    Route::get('/dashboard', function () {
+        return Inertia::render('auth/dashboard/index');
+    })->name('dashboard');
+
     // admin
     Route::middleware('can:admin')->group(function () {
         // setting mpp
-        Route::get('/setting-mpp', [MppController::class, 'index'])->name('mpp.index');
-        Route::post('/setting-mpp', [MppController::class, 'store'])->name('mpp.store');
+        Route::get('/admin/setting-mpp', [MppController::class, 'index'])->name('mpp.index');
+        Route::post('/admin/setting-mpp', [MppController::class, 'store'])->name('mpp.store');
 
         // pengumuman
-        Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman.index');
-        Route::post('/pengumuman', [PengumumanController::class, 'store'])->name('pengumuman.store');
+        Route::get('/admin/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman.index');
+        Route::post('/admin/pengumuman', [PengumumanController::class, 'store'])->name('pengumuman.store');
 
         // berita
-        Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
-        Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store');
-        Route::post('/berita/{slug}', [BeritaController::class, 'update'])->name('berita.update');
-        Route::delete('/berita/{slug}', [BeritaController::class, 'destroy'])->name('berita.destroy');
+        Route::get('/admin/berita', [BeritaController::class, 'index'])->name('berita.index');
+        Route::post('/admin/berita', [BeritaController::class, 'store'])->name('berita.store');
+        Route::post('/admin/berita/{slug}', [BeritaController::class, 'update'])->name('berita.update');
+        Route::delete('/admin/berita/{slug}', [BeritaController::class, 'destroy'])->name('berita.destroy');
 
         // instansi
-        Route::get('/instansi', [InstansiController::class, 'index'])->name('instansi.index');
-        Route::get('/instansi/{id}', [InstansiController::class, 'show'])->name('instansi.show');
-        Route::post('/instansi', [InstansiController::class, 'store'])->name('instansi.store');
-        Route::post('/instansi/{id}', [InstansiController::class, 'update'])->name('instansi.update');
-        Route::delete('/instansi/{id}', [InstansiController::class, 'destroy'])->name('instansi.destroy');
+        Route::get('/admin/instansi', [InstansiController::class, 'index'])->name('instansi.index');
+        Route::get('/admin/instansi/{id}', [InstansiController::class, 'show'])->name('instansi.show');
+        Route::post('/admin/instansi', [InstansiController::class, 'store'])->name('instansi.store');
+        Route::post('/admin/instansi/{id}', [InstansiController::class, 'update'])->name('instansi.update');
+        Route::delete('/admin/instansi/{id}', [InstansiController::class, 'destroy'])->name('instansi.destroy');
 
         // layanan
-        Route::post('/layanan', [LayananController::class, 'store'])->name('layanan.store');
-        Route::put('/layanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
-        Route::delete('/layanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
+        Route::post('/admin/layanan', [LayananController::class, 'store'])->name('layanan.store');
+        Route::put('/admin/layanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
+        Route::delete('/admin/layanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
+
+        // pengaduan
+        Route::get('/admin/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.admin.index');
+        Route::patch('/admin/pengaduan/{id}', [PengaduanController::class, 'confirm'])->name('pengaduan.admin.confirm');
+        Route::delete('/admin/pengaduan/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.admin.destroy');
     });
 
     // masyarakat

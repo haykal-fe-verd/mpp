@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Instansi;
 use App\Models\Mpp;
 use App\Models\Pengumuman;
 use Illuminate\Http\Request;
@@ -48,6 +49,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'mpp' => Mpp::first(),
             'pengumuman' => Pengumuman::first(),
+            'instansi' => Instansi::with('layanan.persyaratan')->get(),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),

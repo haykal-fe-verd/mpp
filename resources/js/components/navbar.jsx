@@ -3,19 +3,10 @@ import { Link, usePage } from "@inertiajs/react";
 import { Menu } from "lucide-react";
 
 import MobileNavbar from "@/components/mobile-navbar";
+import { navigationsGuest } from "@/data/navigations-guest";
 
 function Navbar() {
     const { mpp } = usePage().props;
-
-    const navigation = [
-        { name: "Beranda", href: route("home") },
-        { name: "Daftar Instansi", href: "#" },
-        { name: "Daftar Layanan", href: "#" },
-        { name: "Tentang MPP", href: route("about") },
-        { name: "Berita", href: "#" },
-        { name: "Pengaduan", href: "#" },
-        { name: "Daftar", href: route("register") },
-    ];
 
     return (
         <header className="sticky inset-x-0 top-0 z-50 bg-white shadow-md">
@@ -47,13 +38,13 @@ function Navbar() {
                     <MobileNavbar />
                 </div>
                 <div className="hidden lg:flex lg:gap-x-12">
-                    {navigation.map((item) => (
+                    {navigationsGuest.map((item) => (
                         <Link
-                            key={item.name}
+                            key={item.label}
                             href={item.href}
                             className="text-sm font-semibold leading-6 text-gray-900"
                         >
-                            {item.name}
+                            {item.label}
                         </Link>
                     ))}
                 </div>

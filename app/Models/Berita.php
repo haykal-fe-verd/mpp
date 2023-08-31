@@ -11,5 +11,5 @@ class Berita extends Model
 
     protected $table = "tb_berita";
     protected $primaryKey = 'id';
-    protected $guarded = ['id'];
+    protected $guarded = [];
 }

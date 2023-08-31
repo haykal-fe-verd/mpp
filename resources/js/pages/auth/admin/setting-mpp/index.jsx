@@ -1,5 +1,7 @@
 import React from "react";
 import { Head, useForm, usePage } from "@inertiajs/react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 import AuthLayout from "@/layouts/AuthLayout";
 import { Separator } from "@/components/ui/separator";
@@ -42,13 +44,11 @@ function SettingMpp() {
                                 <Label htmlFor="deskripsi_mpp">
                                     Deskripsi MPP
                                 </Label>
-                                <Textarea
-                                    id="deskripsi_mpp"
-                                    name="deskripsi_mpp"
-                                    className="mt-2"
+                                <ReactQuill
+                                    theme="snow"
                                     value={data.deskripsi_mpp}
                                     onChange={(e) =>
-                                        setData("deskripsi_mpp", e.target.value)
+                                        setData("deskripsi_mpp", e)
                                     }
                                 />
                                 <InputError message={errors.deskripsi_mpp} />
@@ -58,19 +58,13 @@ function SettingMpp() {
                                 <Label htmlFor="kenapa_harus_mpp">
                                     Kenapa Harus MPP ?
                                 </Label>
-                                <Textarea
-                                    id="kenapa_harus_mpp"
-                                    name="kenapa_harus_mpp"
-                                    className="mt-2"
+                                <ReactQuill
+                                    theme="snow"
                                     value={data.kenapa_harus_mpp}
                                     onChange={(e) =>
-                                        setData(
-                                            "kenapa_harus_mpp",
-                                            e.target.value
-                                        )
+                                        setData("kenapa_harus_mpp", e)
                                     }
                                 />
-
                                 <InputError message={errors.kenapa_harus_mpp} />
                             </div>
 

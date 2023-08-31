@@ -12,6 +12,8 @@ class Persyaratan extends Model
 
     protected $table = "tb_persyaratan";
     protected $primaryKey = 'id';
+    protected $guarded = [];
+
 
     public function layanan(): BelongsTo
     {
