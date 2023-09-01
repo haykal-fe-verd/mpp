@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             InstansiSeeder::class,
             LayananSeeder::class,
             PersyaratanSeeder::class,
-            PengaduanSeeder::class
+            PengaduanSeeder::class,
+            PermohonanSeeder::class
         ]);
     }
 }

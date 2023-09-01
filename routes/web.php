@@ -15,6 +15,7 @@ use App\Http\Controllers\LayananController;
 use App\Http\Controllers\MppController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -61,10 +62,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('password', [ChangePasswordController::class, 'index'])->name('password.index');
     Route::put('password', [ChangePasswordController::class, 'update'])->name('password.update');
 
-    // verifikasi email
-    Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:1,1'])->name('verification.verify');
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
 
     // dashboard
     Route::get('/dashboard', function () {
@@ -103,11 +100,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.admin.index');
         Route::patch('/admin/pengaduan/{id}', [PengaduanController::class, 'confirm'])->name('pengaduan.admin.confirm');
         Route::delete('/admin/pengaduan/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.admin.destroy');
+
+        // permohonan
+        Route::get('/admin/permohonan', [PermohonanController::class, 'index'])->name('permohonan.index');
+        Route::get('/admin/permohonan/{id}', [PermohonanController::class, 'show'])->name('permohonan.show');
+        Route::post('/admin/permohonan', [PermohonanController::class, 'store'])->name('permohonan.store');
+        Route::post('/admin/permohonan/{id}', [PermohonanController::class, 'update'])->name('permohonan.update');
+        Route::delete('/admin/permohonan/{id}', [PermohonanController::class, 'destroy'])->name('permohonan.destroy');
     });
 
     // masyarakat
     Route::middleware('can:masyarakat')->group(function () {
-        // test
+        // permohonan
+        Route::get('permohonan', [PermohonanController::class, 'indexMasyarakat'])->name('permohonan.masyarakat.index');
+        Route::post('permohonan', [PermohonanController::class, 'storeMasyarakat'])->name('permohonan.masyarakat.store');
+        Route::post('permohonan/{id}', [PermohonanController::class, 'updateMasyarakat'])->name('permohonan.masyarakat.update');
     });
 });
 

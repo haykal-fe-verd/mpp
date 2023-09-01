@@ -4,6 +4,7 @@ import {
     Newspaper,
     ServerCog,
     Settings,
+    UploadCloud,
     Volume2,
 } from "lucide-react";
 
@@ -18,6 +19,12 @@ export const navigations = [
         label: "Instansi",
         href: route("instansi.index"),
         icon: ServerCog,
+        role: ["admin"],
+    },
+    {
+        label: "Permohonan",
+        href: route("permohonan.index"),
+        icon: UploadCloud,
         role: ["admin"],
     },
     {
@@ -43,5 +50,11 @@ export const navigations = [
         href: route("mpp.index"),
         icon: Settings,
         role: ["admin"],
+    },
+    {
+        label: "Permohonan",
+        href: route("permohonan.masyarakat.index"),
+        icon: UploadCloud,
+        role: ["masyarakat"],
     },
 ];

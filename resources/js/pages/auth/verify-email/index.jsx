@@ -66,7 +66,7 @@ export default function VerifyEmail({ status }) {
                                 mengirimkan email lainnya kepada Anda.
                             </p>
                         </CardContent>
-                        <CardFooter className="flex items-center justify-between">
+                        <CardFooter className="flex items-center justify-between gap-3">
                             {/* button */}
                             <Button
                                 className="flex items-center justify-center gap-3"
