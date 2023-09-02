@@ -1,6 +1,7 @@
 import React from "react";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import {
+    Eye,
     EyeIcon,
     MoreHorizontal,
     MoreVertical,
@@ -19,36 +20,36 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import DataTable from "@/components/data-table";
-import Swal from "sweetalert2";
 import { Dialog } from "@/components/ui/dialog";
+import Show from "./show";
 
 function Permohonan() {
     const { permohonan } = usePage().props;
     const [openModal, setOpenModal] = React.useState(false);
+    const [isShow, setIsShow] = React.useState(false);
+    const [showData, setShowData] = React.useState(null);
 
-    const {
-        data,
-        setData,
-        post,
-        processing,
-        errors,
-        delete: destroy,
-        reset,
-    } = useForm();
+    const { data, setData, post, processing, errors, reset } = useForm();
 
-    const handleDelete = (item) => {
-        Swal.fire({
-            title: "Apakah anda ingin menghapus data?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Ya",
-            confirmButtonColor: "#2c6beb",
-            cancelButtonText: "Tidak",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                destroy(route("permohonan.destroy", item.id));
-                reset();
-            }
+    const handleShow = (item) => {
+        setIsShow(true);
+        setShowData(item);
+        setData("pesan", item.pesan);
+        setOpenModal(true);
+    };
+
+    const handleTerima = (e) => {
+        post(route("permohonan.terima", showData.id), {
+            onSuccess: () => {
+                setOpenModal(false), reset();
+            },
+        });
+    };
+    const handleTolak = (e) => {
+        post(route("permohonan.tolak", showData.id), {
+            onSuccess: () => {
+                setOpenModal(false), reset();
+            },
         });
     };
 
@@ -110,6 +111,8 @@ function Permohonan() {
                                             className={`capitalize px-3 py-1 text-white rounded-md ${
                                                 item.status === "selesai"
                                                     ? "bg-primary"
+                                                    : item.status === "menunggu"
+                                                    ? "bg-orange-500"
                                                     : "bg-red-500"
                                             }`}
                                         >
@@ -124,11 +127,11 @@ function Permohonan() {
                                             <DropdownMenuContent>
                                                 <DropdownMenuItem
                                                     onClick={() =>
-                                                        handleDelete(item)
+                                                        handleShow(item)
                                                     }
                                                 >
-                                                    <Trash2 className="w-4 h-4 mr-3" />
-                                                    <span>Hapus</span>
+                                                    <Eye className="w-4 h-4 mr-3" />
+                                                    <span>Lihat</span>
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
@@ -147,6 +150,17 @@ function Permohonan() {
                         )}
                     </DataTable>
                 </div>
+
+                {showData && (
+                    <Show
+                        showData={showData}
+                        data={data}
+                        setData={setData}
+                        errors={errors}
+                        handleTerima={handleTerima}
+                        handleTolak={handleTolak}
+                    />
+                )}
             </Dialog>
         </AuthLayout>
     );

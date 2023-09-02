@@ -6,6 +6,7 @@ import { pickBy } from "lodash";
 import {
     Table,
     TableBody,
+    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -21,7 +22,7 @@ import {
 import Pagination from "@/components/pagination";
 import { Input } from "@/components/ui/input";
 
-function DataTable({ data, header, link, children }) {
+function DataTable({ data, header, link, children, caption }) {
     const [isLoading, setIsLoading] = React.useState(false);
     const perpage = React.useRef(data.per_page);
     const [search, setSearch] = React.useState("");
@@ -101,6 +102,7 @@ function DataTable({ data, header, link, children }) {
             {/* table */}
             <div className="border rounded-md">
                 <Table>
+                    {caption && <TableCaption>{caption}</TableCaption>}
                     <TableHeader>
                         <TableRow>
                             {header.map((item, index) => (

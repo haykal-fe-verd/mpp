@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('tb_permohonan', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['menunggu', 'selesai'])->default('menunggu');
+            $table->enum('status', ['menunggu', 'ditolak', 'selesai'])->default('menunggu');
             $table->string('no_resi')->nullable();
+            $table->string('pesan')->nullable();
+            $table->string('file');
 
             $table->unsignedBigInteger('masyarakat_id');
             $table->foreign('masyarakat_id')->references('id')->on('tb_masyarakat')->onDelete('cascade');

@@ -103,10 +103,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // permohonan
         Route::get('/admin/permohonan', [PermohonanController::class, 'index'])->name('permohonan.index');
-        Route::get('/admin/permohonan/{id}', [PermohonanController::class, 'show'])->name('permohonan.show');
-        Route::post('/admin/permohonan', [PermohonanController::class, 'store'])->name('permohonan.store');
-        Route::post('/admin/permohonan/{id}', [PermohonanController::class, 'update'])->name('permohonan.update');
-        Route::delete('/admin/permohonan/{id}', [PermohonanController::class, 'destroy'])->name('permohonan.destroy');
+        Route::post('/admin/permohonan/terima/{id}', [PermohonanController::class, 'terima'])->name('permohonan.terima');
+        Route::post('/admin/permohonan/tolak/{id}', [PermohonanController::class, 'tolak'])->name('permohonan.tolak');
     });
 
     // masyarakat
@@ -114,7 +112,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // permohonan
         Route::get('permohonan', [PermohonanController::class, 'indexMasyarakat'])->name('permohonan.masyarakat.index');
         Route::post('permohonan', [PermohonanController::class, 'storeMasyarakat'])->name('permohonan.masyarakat.store');
-        Route::post('permohonan/{id}', [PermohonanController::class, 'updateMasyarakat'])->name('permohonan.masyarakat.update');
     });
 });
 

@@ -35,8 +35,10 @@
         "cmdk": "^0.2.0",
         "lodash": "^4.17.21",
         "lucide-react": "^0.268.0",
+        "moment": "^2.29.4",
         "react-quill": "^2.0.0",
         "react-select": "^5.7.4",
+        "react-to-print": "^2.14.13",
         "sweetalert2": "^11.7.27",
         "tailwind-merge": "^1.14.0",
         "tailwindcss-animate": "^1.0.6"

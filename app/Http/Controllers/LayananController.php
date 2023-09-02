@@ -11,7 +11,6 @@ class LayananController extends Controller
 {
     public function store(Request $request): RedirectResponse
     {
-        // dd($request->all());
         $request->validate([
             'instansi_id' => 'required',
             'nama_layanan' => 'required',
