@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstansiController;
 use App\Http\Controllers\LayananController;
@@ -62,11 +63,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('password', [ChangePasswordController::class, 'index'])->name('password.index');
     Route::put('password', [ChangePasswordController::class, 'update'])->name('password.update');
 
-
     // dashboard
-    Route::get('/dashboard', function () {
-        return Inertia::render('auth/dashboard/index');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // admin
     Route::middleware('can:admin')->group(function () {
