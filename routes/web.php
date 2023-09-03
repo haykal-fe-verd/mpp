@@ -32,6 +32,11 @@ Route::get('/tentang-mpp', [HomeController::class, 'about'])->name('about');
 Route::get('/pengaduan', [HomeController::class, 'pengaduan'])->name('pengaduan.index');
 Route::post('/pengaduan', [PengaduanController::class, 'store'])->middleware('throttle:1,1')->name('pengaduan.store');
 
+// berita
+Route::get('/berita', [HomeController::class, 'berita'])->name('home.berita.index');
+Route::get('/berita/{slug}', [HomeController::class, 'detailBerita'])->name('home.berita.detail');
+
+
 // guest
 Route::middleware('guest')->group(function () {
     // login

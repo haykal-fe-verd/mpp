@@ -138,7 +138,7 @@ function Berita() {
                                     </TableCell>
                                     <TableCell>{item.judul}</TableCell>
                                     <TableCell>
-                                        <p
+                                        <div
                                             className="text-justify"
                                             dangerouslySetInnerHTML={{
                                                 __html:

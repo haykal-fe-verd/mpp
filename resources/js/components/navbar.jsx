@@ -4,9 +4,10 @@ import { Menu } from "lucide-react";
 
 import MobileNavbar from "@/components/mobile-navbar";
 import { navigationsGuest } from "@/data/navigations-guest";
+import { cn } from "@/lib/utils";
 
 function Navbar() {
-    const { mpp } = usePage().props;
+    const { ziggy, mpp } = usePage().props;
 
     return (
         <header className="sticky inset-x-0 top-0 z-50 bg-white shadow-md">
@@ -42,7 +43,13 @@ function Navbar() {
                         <Link
                             key={item.label}
                             href={item.href}
-                            className="text-sm font-semibold leading-6 text-gray-900"
+                            className={cn(
+                                "text-sm font-semibold leading-6 text-gray-900",
+                                ziggy.location === item.href ||
+                                    ziggy.location.includes(route.href)
+                                    ? "text-primary"
+                                    : "text-gray-900"
+                            )}
                         >
                             {item.label}
                         </Link>

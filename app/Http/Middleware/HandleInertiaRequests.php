@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Berita;
 use App\Models\Instansi;
 use App\Models\Mpp;
 use App\Models\Pengumuman;

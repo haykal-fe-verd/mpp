@@ -17,7 +17,7 @@ export const navigationsGuest = [
     },
     {
         label: "Berita",
-        href: "",
+        href: route("home.berita.index"),
     },
     {
         label: "Pengaduan",
