@@ -5,11 +5,11 @@ export const navigationsGuest = [
     },
     {
         label: "Daftar Instansi",
-        href: "",
+        href: route("home.daftar.instansi.index"),
     },
     {
         label: "Daftar Layanan",
-        href: "",
+        href: route("home.daftar.layanan.index"),
     },
     {
         label: "Tentang Mpp",

@@ -19,8 +19,8 @@ function CardBerita({ item }) {
                     className="mt-5 text-justify"
                     dangerouslySetInnerHTML={{
                         __html:
-                            item.isi.substring(0, 200) +
-                            (item.isi.length > 200 ? "..." : ""),
+                            item.isi.substring(0, 600) +
+                            (item.isi.length > 600 ? " ............" : ""),
                     }}
                 />
             </div>

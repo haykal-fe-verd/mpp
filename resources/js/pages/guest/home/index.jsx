@@ -175,7 +175,7 @@ function Home() {
                         menu pengaduan atau klik tombol dibawah ini.
                     </p>
                     <Link
-                        href="#"
+                        href={route("pengaduan.index")}
                         className="px-4 py-2 text-white border border-red-500 rounded-md hover:shadow-lg hover:shadow-red-500/50"
                     >
                         Laporkan

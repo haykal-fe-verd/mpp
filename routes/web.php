@@ -36,6 +36,12 @@ Route::post('/pengaduan', [PengaduanController::class, 'store'])->middleware('th
 Route::get('/berita', [HomeController::class, 'berita'])->name('home.berita.index');
 Route::get('/berita/{slug}', [HomeController::class, 'detailBerita'])->name('home.berita.detail');
 
+// daftar layanan
+Route::get('/daftar-layanan', [HomeController::class, 'daftarLayanan'])->name('home.daftar.layanan.index');
+
+// daftar instansi
+Route::get('/daftar-instansi', [HomeController::class, 'daftarInstansi'])->name('home.daftar.instansi.index');
+
 
 // guest
 Route::middleware('guest')->group(function () {
