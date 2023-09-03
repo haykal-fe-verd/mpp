@@ -10,7 +10,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 function Detail({ showData }) {
-    console.log("🚀  showData:", showData);
     return (
         <DialogContent>
             <DialogHeader>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Head, Link, usePage } from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
 import { BadgeCheck, Search, Smartphone, Volume2 } from "lucide-react";
 
 import GuestLayout from "@/layouts/GuestLayout";
@@ -17,9 +17,41 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/footer";
+import { pickBy } from "lodash";
 
-function Home() {
-    const { mpp } = usePage().props;
+function Home({
+    totalInstansi,
+    totalLayanan,
+    totalMasyarakatTerlayani,
+    searchResult,
+}) {
+    const { mpp, instansi } = usePage().props;
+
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [search, setSearch] = React.useState("");
+    const [searchChanged, setSearchChanged] = React.useState(false);
+
+    React.useEffect(() => {
+        if (searchChanged) {
+            const delaySearch = setTimeout(() => {
+                getData();
+            }, 300);
+
+            return () => {
+                clearTimeout(delaySearch);
+            };
+        }
+        setSearchChanged(true);
+    }, [search, setSearchChanged]);
+
+    const getData = () => {
+        setIsLoading(true);
+        router.get(route("home"), pickBy({ search }), {
+            preserveScroll: true,
+            preserveState: true,
+            onFinish: () => setIsLoading(false),
+        });
+    };
     return (
         <GuestLayout>
             <Head title="Home" />
@@ -55,26 +87,52 @@ function Home() {
                             type="search"
                             id="search"
                             name="search"
-                            placeholder="Cari layanan atau instansi ..."
+                            placeholder="Cari layanan ..."
                             className={cn("h-16 mt-2 shadow-lg pl-20")}
+                            onChange={(e) => setSearch(e.target.value)}
                         />
+
+                        <div
+                            className={`absolute ${
+                                search ? "block" : "hidden"
+                            } w-full mt-2 p-2 bg-white border rounded-lg shadow-lg`}
+                        >
+                            <ScrollArea className="h-64 ">
+                                <div className="flex flex-col">
+                                    {searchResult?.map((item) => {
+                                        return (
+                                            <Link
+                                                href={route(
+                                                    "home.detail.layanan.index",
+                                                    item.id
+                                                )}
+                                                key={item.id}
+                                                className="p-2 my-2 rounded-md hover:bg-primary hover:text-white"
+                                            >
+                                                {item.nama_layanan}
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+                            </ScrollArea>
+                        </div>
                     </div>
                     <div className="flex items-center justify-between mt-5 ">
                         <Link href="#" className="flex flex-col text-center">
                             <h1 className="text-3xl font-bold text-primary">
-                                21
+                                {totalInstansi}
                             </h1>
                             <p className="mt-2">Instansi</p>
                         </Link>
                         <Link href="#" className="flex flex-col text-center">
                             <h1 className="text-3xl font-bold text-primary">
-                                1000
+                                {totalLayanan}
                             </h1>
                             <p className="mt-2">Layanan</p>
                         </Link>
                         <div className="flex flex-col text-center">
                             <h1 className="text-3xl font-bold text-primary">
-                                100000
+                                {totalMasyarakatTerlayani}
                             </h1>
                             <p className="mt-2">Masyarakat Terlayani</p>
                         </div>
@@ -89,7 +147,7 @@ function Home() {
                     <div className="flex flex-col items-center justify-center text-center">
                         <Smartphone className="w-20 h-20" />
                         <h5 className="mt-10 text-xl font-semibold">
-                            Daftar Antrian
+                            Daftar Akun
                         </h5>
                         <p>
                             Anda dapat mendaftar secara online menggunakan
@@ -99,19 +157,17 @@ function Home() {
                     <div className="flex flex-col items-center justify-center text-center">
                         <Volume2 className="w-20 h-20" />
                         <h5 className="mt-10 text-xl font-semibold">
-                            Menunggu Panggilan
+                            Pilih Layanan
                         </h5>
                         <p>
-                            Pemberitahuan panggilan dapat dilakukan secara
-                            audio, visual dan notif di email
+                            Pilih layanan yang ingin anda ajukan pada MPP Kab.
+                            Aceh Besar
                         </p>
                     </div>
                     <div className="flex flex-col items-center justify-center text-center">
                         <BadgeCheck className="w-20 h-20" />
                         <h5 className="mt-10 text-xl font-semibold">Selesai</h5>
-                        <p>
-                            Selamat layanan yang anda butuhkan sudah terlayani
-                        </p>
+                        <p>Anda akan mendapatkan resi yang bisa anda cetak </p>
                     </div>
                 </div>
             </section>
@@ -125,7 +181,7 @@ function Home() {
                 <div className="flex items-center justify-center p-5 mt-20">
                     <ScrollArea className="border rounded-md shadow-2xl shadow-primary/20 border-primary">
                         <div className="flex w-full p-5 space-x-10 rounded-md">
-                            {[...Array(10)].map((item, index) => (
+                            {instansi.map((item, index) => (
                                 <Card
                                     className={cn(
                                         "w-[360px] lg:w-96 text-center border-primary"
@@ -137,16 +193,18 @@ function Home() {
                                             "flex items-center gap-5"
                                         )}
                                     >
-                                        <CardTitle>Nama Instansi</CardTitle>
+                                        <CardTitle>
+                                            {item.nama_instansi}
+                                        </CardTitle>
                                         <img
-                                            src="/logo.png"
+                                            src={`/storage/${item.logo}`}
                                             className="rounded-full w-36 h-36"
                                         />
                                     </CardHeader>
                                     <CardContent>
-                                        <p>Descripsi Instansi</p>
+                                        <p>{item.profil_instansi}</p>
                                         <p className="px-4 py-2 mt-5 text-center text-white rounded-md bg-primary">
-                                            Total Pelayanan
+                                            {item.layanan.length} Layanan
                                         </p>
                                     </CardContent>
                                 </Card>

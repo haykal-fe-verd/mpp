@@ -11,7 +11,6 @@ import { Eye } from "lucide-react";
 import Detail from "./detail";
 
 function DaftarInstansi({ daftarInstansi }) {
-    console.log("🚀  daftarInstansi:", daftarInstansi);
     const [openModal, setOpenModal] = React.useState(false);
     const [showData, setShowData] = React.useState(null);
 
@@ -87,7 +86,7 @@ function DaftarInstansi({ daftarInstansi }) {
                         </DataTable>
                     </div>
                 </div>
-                <Detail showData={showData} />
+                {showData && <Detail showData={showData} />}
             </Dialog>
 
             <Footer />

@@ -26,7 +26,6 @@ import { Dialog } from "@/components/ui/dialog";
 
 function Pengaduan() {
     const { pengaduan } = usePage().props;
-    console.log("🚀  pengaduan:", pengaduan);
 
     const { patch, delete: destroy, reset } = useForm();
 

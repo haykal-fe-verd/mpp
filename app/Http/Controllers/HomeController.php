@@ -5,15 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Berita;
 use App\Models\Instansi;
 use App\Models\Layanan;
+use App\Models\Permohonan;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class HomeController extends Controller
 {
-    public function home(): Response
+    public function home(Request $request): Response
     {
-        return Inertia::render('guest/home/index');
+        $totalInstansi = Instansi::count();
+        $totalLayanan = Layanan::count();
+        $totalMasyarakatTerlayani = Permohonan::count();
+
+        $query = Layanan::latest();
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($query) use ($search) {
+                $query->where('nama_layanan', 'LIKE', "%$search%");
+            });
+        }
+        $searchResult = $query->get();
+
+        return Inertia::render('guest/home/index', compact('totalInstansi', 'totalLayanan', 'totalMasyarakatTerlayani', 'searchResult'));
     }
 
     public function about(): Response
@@ -83,5 +97,11 @@ class HomeController extends Controller
         $daftarInstansi = $query->paginate($request->perpage ?? 10)->withQueryString();
 
         return Inertia::render('guest/daftar-instansi/index', compact('daftarInstansi'));
+    }
+
+    public function detailLayanan($id): Response
+    {
+        $data = Layanan::with('instansi')->findOrFail($id);
+        return Inertia::render('guest/detail-layanan', compact('data'));
     }
 }
