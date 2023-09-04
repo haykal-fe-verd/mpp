@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PermohonanDibuat;
 use App\Models\Layanan;
+use App\Models\Masyarakat;
 use App\Models\Permohonan;
 use App\Models\Persyaratan;
+use App\Models\User;
+use App\Notifications\PermohonanNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -52,6 +56,11 @@ class PermohonanController extends Controller
         $permohonan->pesan = $request->input('pesan');
         $permohonan->save();
 
+        $masyarakat = Masyarakat::where('id', $permohonan->masyarakat_id)->first();
+        $user = $masyarakat->user;
+        $user->notify(new PermohonanNotification($permohonan, 'Permohonan anda telah diterima', route('permohonan.masyarakat.index')));
+        event(new PermohonanDibuat($permohonan, 'Permohonan anda telah diterima'));
+
         return redirect()->route('permohonan.index')->with('success', 'Permohonan berhasil diedit');
     }
 
@@ -66,6 +75,11 @@ class PermohonanController extends Controller
         $permohonan->status = "ditolak";
         $permohonan->pesan = $request->input('pesan');
         $permohonan->save();
+
+        $masyarakat = Masyarakat::where('id', $permohonan->masyarakat_id)->first();
+        $user = $masyarakat->user;
+        $user->notify(new PermohonanNotification($permohonan, 'Permohonan anda ditolak oleh admin', route('permohonan.masyarakat.index')));
+        event(new PermohonanDibuat($permohonan, 'Permohonan anda ditolak oleh admin'));
 
         return redirect()->route('permohonan.index')->with('success', 'Permohonan berhasil ditolak');
     }
@@ -106,6 +120,10 @@ class PermohonanController extends Controller
         $permohonan->masyarakat_id = $request->user()->userData()->id;
         $permohonan->layanan_id = $request->input('layanan_id');
         $permohonan->save();
+
+        $admin = User::where('role', 'admin')->first();
+        $admin->notify(new PermohonanNotification($permohonan, 'Ada permohonan baru nih', route('permohonan.index')));
+        event(new PermohonanDibuat($permohonan, 'Ada permohonan baru nih'));
 
         return redirect()->route('permohonan.masyarakat.store')->with('success', 'Permohonan berhasil diajukan');
     }

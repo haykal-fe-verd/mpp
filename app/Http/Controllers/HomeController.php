@@ -7,11 +7,23 @@ use App\Models\Instansi;
 use App\Models\Layanan;
 use App\Models\Permohonan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class HomeController extends Controller
 {
+    public function notifications()
+    {
+        $count =  Auth::user()->unreadNotifications()->count();
+        $list =  Auth::user()->unreadNotifications()->limit(5)->get();
+
+        return response()->json([
+            'count' => $count,
+            'list' => $list
+        ]);
+    }
+
     public function home(Request $request): Response
     {
         $totalInstansi = Instansi::count();

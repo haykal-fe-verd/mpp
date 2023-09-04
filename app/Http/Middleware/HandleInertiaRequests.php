@@ -7,6 +7,7 @@ use App\Models\Instansi;
 use App\Models\Mpp;
 use App\Models\Pengumuman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -51,6 +52,10 @@ class HandleInertiaRequests extends Middleware
             'mpp' => Mpp::first(),
             'pengumuman' => Pengumuman::first(),
             'instansi' => Instansi::with('layanan.persyaratan')->get(),
+            'notifications' => Auth::user() ? [
+                'count' => Auth::user()->unreadNotifications()->count(),
+                'list' => Auth::user()->unreadNotifications()->limit(5)->get(),
+            ] : null,
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),

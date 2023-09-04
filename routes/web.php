@@ -22,6 +22,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+
+// notifications
+Route::get('/notifications', [HomeController::class, 'notifications'])->name('notifications');
+
 // home
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
