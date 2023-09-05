@@ -25,6 +25,7 @@ use Inertia\Inertia;
 
 // notifications
 Route::get('/notifications', [HomeController::class, 'notifications'])->name('notifications');
+Route::post('/notifications', [HomeController::class, 'notificationsReadAll'])->name('notifications.read.all');
 
 // home
 Route::get('/', [HomeController::class, 'home'])->name('home');

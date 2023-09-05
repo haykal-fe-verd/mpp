@@ -17,6 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import MobileSidebar from "@/components/mobile-sidebar";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import moment from "moment/moment";
 
 function Topbar() {
     const { auth } = usePage().props;
@@ -45,6 +46,17 @@ function Topbar() {
             .get(route("notifications"))
             .then((res) => setListNotification(res.data))
             .catch((err) => console.log("error bang", err));
+    };
+
+    const markAllNotificationsAsRead = () => {
+        axios
+            .post(route("notifications.read.all"))
+            .then((res) => {
+                loadNotifications();
+            })
+            .catch((err) =>
+                console.error("Error marking all notifications as read", err)
+            );
     };
 
     useEffect(() => {
@@ -98,26 +110,44 @@ function Topbar() {
                                 </span>{" "}
                                 notifikasi yang belum dibaca.
                             </p>
-                            <div className="grid gap-4">
-                                {listNotification?.list?.map((item) => (
+                            <div
+                                className={`${
+                                    listNotification.count > 0 && "p-5 border"
+                                } rounded-md`}
+                            >
+                                {listNotification?.list?.map((item, index) => (
                                     <Link
-                                        key={item.id}
+                                        key={index}
                                         href={item.data.href}
-                                        className="p-2 rounded-lg shadow-lg text-primary bg-primary/20"
+                                        className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
                                     >
-                                        <h1 className="font-semibold">
-                                            {item.data.message}
-                                        </h1>
-                                        <p></p>
+                                        <span className="flex items-center justify-center w-2 h-2 translate-y-3 rounded-full bg-primary" />
+                                        <div className="space-y-1">
+                                            <p className="text-sm font-medium leading-none">
+                                                {item.data.message}
+                                            </p>
+                                            <p className="text-sm text-muted-foreground">
+                                                Created:{" "}
+                                                {moment(
+                                                    item.created_at
+                                                ).fromNow()}
+                                            </p>
+                                        </div>
                                     </Link>
                                 ))}
                             </div>
-                            <div className="mt-5">
-                                <Button className="w-full">
-                                    <Check className="w-4 h-4 mr-2" /> Tandai
-                                    semua telah dibaca
-                                </Button>
-                            </div>
+                            {listNotification.count > 0 && (
+                                <div className="mt-5">
+                                    <Button
+                                        type="button"
+                                        className="w-full"
+                                        onClick={markAllNotificationsAsRead}
+                                    >
+                                        <Check className="w-4 h-4 mr-2" />{" "}
+                                        Tandai semua telah dibaca
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     </DropdownMenuContent>
                 </DropdownMenu>

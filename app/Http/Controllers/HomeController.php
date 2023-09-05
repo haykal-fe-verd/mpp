@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -22,6 +23,16 @@ class HomeController extends Controller
             'count' => $count,
             'list' => $list
         ]);
+    }
+
+    public function notificationsReadAll()
+    {
+        DB::transaction(function () {
+            Auth::user()->notifications()->update(['read_at' => now()]);
+        });
+
+
+        return response()->json(['message' => 'All notifications marked as read']);
     }
 
     public function home(Request $request): Response
