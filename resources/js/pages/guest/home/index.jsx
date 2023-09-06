@@ -188,25 +188,32 @@ function Home({
                                     )}
                                     key={index}
                                 >
-                                    <CardHeader
-                                        className={cn(
-                                            "flex items-center gap-5"
+                                    <Link
+                                        href={route(
+                                            "home.detail.instansi.index",
+                                            item.id
                                         )}
                                     >
-                                        <CardTitle>
-                                            {item.nama_instansi}
-                                        </CardTitle>
-                                        <img
-                                            src={`/storage/${item.logo}`}
-                                            className="rounded-full w-36 h-36"
-                                        />
-                                    </CardHeader>
-                                    <CardContent>
-                                        <p>{item.profil_instansi}</p>
-                                        <p className="px-4 py-2 mt-5 text-center text-white rounded-md bg-primary">
-                                            {item.layanan.length} Layanan
-                                        </p>
-                                    </CardContent>
+                                        <CardHeader
+                                            className={cn(
+                                                "flex items-center gap-5"
+                                            )}
+                                        >
+                                            <CardTitle>
+                                                {item.nama_instansi}
+                                            </CardTitle>
+                                            <img
+                                                src={`/storage/${item.logo}`}
+                                                className="rounded-full w-36 h-36"
+                                            />
+                                        </CardHeader>
+                                        <CardContent>
+                                            <p>{item.profil_instansi}</p>
+                                            <p className="px-4 py-2 mt-5 text-center text-white rounded-md bg-primary">
+                                                {item.layanan.length} Layanan
+                                            </p>
+                                        </CardContent>
+                                    </Link>
                                 </Card>
                             ))}
                         </div>
@@ -214,6 +221,19 @@ function Home({
                     </ScrollArea>
                 </div>
             </section>
+
+            {/* maps */}
+            <div className="border border-primary">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15885.467006964976!2d95.3573833!3d5.5124572!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x304039439565ed3d%3A0xbb19aed2c20f8d04!2sMAL%20Pelayanan%20Publik%20Aceh%20Besar!5e0!3m2!1sen!2sid!4v1694013736255!5m2!1sen!2sid"
+                    width="100%"
+                    height="600"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+            </div>
 
             {/* pengaduan/laporan */}
             <section className="relative flex items-center justify-center h-screen lg:h-[900px]">

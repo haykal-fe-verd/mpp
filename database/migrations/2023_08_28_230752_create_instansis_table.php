@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tb_instansi', function (Blueprint $table) {
             $table->id();
             $table->string('nama_instansi');
-            $table->string('profil_instansi');
+            $table->text('profil_instansi');
             $table->string('telepon');
             $table->string('email');
             $table->string('faks');

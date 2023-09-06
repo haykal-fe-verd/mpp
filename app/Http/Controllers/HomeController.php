@@ -127,4 +127,10 @@ class HomeController extends Controller
         $data = Layanan::with('instansi')->findOrFail($id);
         return Inertia::render('guest/detail-layanan', compact('data'));
     }
+
+    public function detailInstansi($id): Response
+    {
+        $data = Instansi::with('layanan')->findOrFail($id);
+        return Inertia::render('guest/detail-instansi', compact('data'));
+    }
 }

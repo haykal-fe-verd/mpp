@@ -44,6 +44,7 @@ Route::get('/berita/{slug}', [HomeController::class, 'detailBerita'])->name('hom
 // daftar layanan
 Route::get('/daftar-layanan', [HomeController::class, 'daftarLayanan'])->name('home.daftar.layanan.index');
 Route::get('/detail-layanan/{id}', [HomeController::class, 'detailLayanan'])->name('home.detail.layanan.index');
+Route::get('/detail-instansi/{id}', [HomeController::class, 'detailInstansi'])->name('home.detail.instansi.index');
 
 // daftar instansi
 Route::get('/daftar-instansi', [HomeController::class, 'daftarInstansi'])->name('home.daftar.instansi.index');
