@@ -86,7 +86,8 @@ function MasyarakatPermohonan() {
         [setLoading, setShowData]
     );
 
-    const handleBeforePrint = React.useCallback(() => {
+    const handleBeforePrint = React.useCallback((item) => {
+        setData(item);
         console.log("`onBeforePrint` called");
     }, []);
 
@@ -137,90 +138,99 @@ function MasyarakatPermohonan() {
                         caption="Data permohonan saya"
                     >
                         {permohonan.data.length !== 0 ? (
-                            permohonan.data.map((item, index) => (
-                                <TableRow key={permohonan.from + index}>
-                                    <TableCell className="text-center">
-                                        {permohonan.from + index}
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.layanan.instansi.nama_instansi}
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.layanan.nama_layanan}
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.layanan.instansi.telepon}
-                                    </TableCell>
-                                    <TableCell>
-                                        {moment(item.created_at).format(
-                                            "DD-MM-YYYY"
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        <span
-                                            className={`capitalize px-3 py-1 text-white rounded-md ${
-                                                item.status === "selesai"
-                                                    ? "bg-primary"
-                                                    : item.status === "menunggu"
-                                                    ? "bg-orange-500"
-                                                    : "bg-red-500"
-                                            }`}
-                                        >
-                                            {item.status}
-                                        </span>
-                                    </TableCell>
-                                    <TableCell className="text-center">
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger>
-                                                <MoreVertical className="w-5 h-5" />
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent>
-                                                <DropdownMenuItem
-                                                    onClick={() =>
-                                                        handleShow(item)
-                                                    }
-                                                >
-                                                    <Eye className="w-4 h-4 mr-3" />
-                                                    <span>Lihat</span>
-                                                </DropdownMenuItem>
-                                                {item.status === "selesai" && (
-                                                    <ReactToPrint
-                                                        onBeforeGetContent={() =>
-                                                            handleOnBeforeGetContent(
-                                                                item
-                                                            )
+                            permohonan.data.map((item, index) => {
+                                return (
+                                    <TableRow key={permohonan.from + index}>
+                                        <TableCell className="text-center">
+                                            {permohonan.from + index}
+                                        </TableCell>
+                                        <TableCell>
+                                            {
+                                                item.layanan.instansi
+                                                    .nama_instansi
+                                            }
+                                        </TableCell>
+                                        <TableCell>
+                                            {item.layanan.nama_layanan}
+                                        </TableCell>
+                                        <TableCell>
+                                            {item.layanan.instansi.telepon}
+                                        </TableCell>
+                                        <TableCell>
+                                            {moment(item.created_at).format(
+                                                "DD-MM-YYYY"
+                                            )}
+                                        </TableCell>
+                                        <TableCell>
+                                            <span
+                                                className={`capitalize px-3 py-1 text-white rounded-md ${
+                                                    item.status === "selesai"
+                                                        ? "bg-primary"
+                                                        : item.status ===
+                                                          "menunggu"
+                                                        ? "bg-orange-500"
+                                                        : "bg-red-500"
+                                                }`}
+                                            >
+                                                {item.status}
+                                            </span>
+                                        </TableCell>
+                                        <TableCell className="text-center">
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger>
+                                                    <MoreVertical className="w-5 h-5" />
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent>
+                                                    <DropdownMenuItem
+                                                        onClick={() =>
+                                                            handleShow(item)
                                                         }
-                                                        onBeforePrint={
-                                                            handleBeforePrint
-                                                        }
-                                                        trigger={() => (
-                                                            <DropdownMenuItem
-                                                                className="flex items-center"
-                                                                onClick={() =>
-                                                                    setShowData(
-                                                                        item
-                                                                    )
-                                                                }
-                                                            >
-                                                                <>
-                                                                    <Printer className="w-4 h-4 mr-3" />
-                                                                    <span>
-                                                                        Cetak
-                                                                        Resi
-                                                                    </span>
-                                                                </>
-                                                            </DropdownMenuItem>
-                                                        )}
-                                                        content={() =>
-                                                            componentRef.current
-                                                        }
-                                                    />
-                                                )}
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                    </TableCell>
-                                </TableRow>
-                            ))
+                                                    >
+                                                        <Eye className="w-4 h-4 mr-3" />
+                                                        <span>Lihat</span>
+                                                    </DropdownMenuItem>
+                                                    {item.status ===
+                                                        "selesai" && (
+                                                        <ReactToPrint
+                                                            onBeforeGetContent={() =>
+                                                                handleOnBeforeGetContent(
+                                                                    item
+                                                                )
+                                                            }
+                                                            onBeforePrint={() =>
+                                                                handleBeforePrint(
+                                                                    item
+                                                                )
+                                                            }
+                                                            trigger={() => (
+                                                                <DropdownMenuItem
+                                                                    className="flex items-center"
+                                                                    onClick={() =>
+                                                                        setShowData(
+                                                                            item
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <>
+                                                                        <Printer className="w-4 h-4 mr-3" />
+                                                                        <span>
+                                                                            Cetak
+                                                                            Resi
+                                                                        </span>
+                                                                    </>
+                                                                </DropdownMenuItem>
+                                                            )}
+                                                            content={() =>
+                                                                componentRef.current
+                                                            }
+                                                        />
+                                                    )}
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })
                         ) : (
                             <TableRow>
                                 <TableCell

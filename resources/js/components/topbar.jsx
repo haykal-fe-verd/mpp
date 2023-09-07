@@ -39,7 +39,6 @@ function Topbar() {
     };
 
     const [listNotification, setListNotification] = useState([]);
-    console.log("🚀  listNotification:", listNotification);
 
     const loadNotifications = () => {
         axios
