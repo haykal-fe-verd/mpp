@@ -208,7 +208,16 @@ function Home({
                                             />
                                         </CardHeader>
                                         <CardContent>
-                                            <p>{item.profil_instansi}</p>
+                                            <p>
+                                                {item.profil_instansi.substring(
+                                                    0,
+                                                    90
+                                                ) +
+                                                    (item.profil_instansi
+                                                        .length > 90
+                                                        ? " ..."
+                                                        : "")}
+                                            </p>
                                             <p className="px-4 py-2 mt-5 text-center text-white rounded-md bg-primary">
                                                 {item.layanan.length} Layanan
                                             </p>

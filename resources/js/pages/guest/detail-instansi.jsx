@@ -19,7 +19,7 @@ function DetailInstansi({ data }) {
                     <h1 className="mt-3 text-2xl font-bold">
                         {data.nama_instansi}
                     </h1>
-                    <p>{data.profil_instansi}</p>
+                    <p className="mt-10 text-justify">{data.profil_instansi}</p>
                 </div>
             </div>
             <div className="p-5 mx-auto">
