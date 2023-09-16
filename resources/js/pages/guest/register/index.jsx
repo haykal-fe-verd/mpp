@@ -26,6 +26,22 @@ import { Textarea } from "@/components/ui/textarea";
 function Register() {
     const { mpp } = usePage().props;
 
+    const calculateAge = (birthdate) => {
+        const today = new Date();
+        const birthDate = new Date(birthdate);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        if (
+            monthDiff < 0 ||
+            (monthDiff === 0 && today.getDate() < birthDate.getDate())
+        ) {
+            age--;
+        }
+
+        return age;
+    };
+
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         tanggal_lahir: "",
@@ -51,6 +67,11 @@ function Register() {
         e.preventDefault();
         post(route("register"));
     };
+
+    React.useEffect(() => {
+        const age = calculateAge(data.tanggal_lahir);
+        setData("umur", age.toString());
+    }, [data.tanggal_lahir]);
 
     return (
         <GuestLayout>
@@ -208,6 +229,7 @@ function Register() {
                                                 name="umur"
                                                 min={0}
                                                 className="pr-20"
+                                                disabled
                                                 value={data.umur}
                                                 onChange={(e) =>
                                                     setData(

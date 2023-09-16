@@ -84,6 +84,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // resi
+    Route::get('/admin/resi', [PermohonanController::class, 'resi'])->name('resi.index');
+    Route::post('/admin/resi/{id}', [PermohonanController::class, 'statusPengambilan'])->name('resi.post');
+
     // admin
     Route::middleware('can:admin')->group(function () {
         // setting mpp

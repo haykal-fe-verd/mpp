@@ -73,6 +73,7 @@ function MasyarakatPermohonan() {
 
     const handleOnBeforeGetContent = React.useCallback(
         (item) => {
+            post(route("resi.post", item.id));
             setLoading(true);
             return new Promise((resolve) => {
                 onBeforeGetContentResolve.current = resolve;

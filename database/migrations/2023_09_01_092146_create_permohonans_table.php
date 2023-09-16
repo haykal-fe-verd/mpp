@@ -16,6 +16,7 @@ return new class extends Migration
             $table->enum('status', ['menunggu', 'ditolak', 'selesai'])->default('menunggu');
             $table->string('no_resi')->nullable();
             $table->string('pesan')->nullable();
+            $table->enum('status_pengambilan', ['0', '1'])->default('0');
             $table->string('file');
 
             $table->unsignedBigInteger('masyarakat_id');

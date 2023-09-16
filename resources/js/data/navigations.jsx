@@ -4,6 +4,7 @@ import {
     Newspaper,
     ServerCog,
     Settings,
+    Text,
     UploadCloud,
     Volume2,
 } from "lucide-react";
@@ -28,6 +29,12 @@ export const navigations = [
         role: ["admin"],
     },
     {
+        label: "Resi",
+        href: route("resi.index"),
+        icon: Text,
+        role: ["admin"],
+    },
+    {
         label: "Pengaduan",
         href: route("pengaduan.admin.index"),
         icon: Beef,
@@ -39,6 +46,7 @@ export const navigations = [
         icon: Newspaper,
         role: ["admin"],
     },
+
     {
         label: "Pengumuman",
         href: route("pengumuman.index"),

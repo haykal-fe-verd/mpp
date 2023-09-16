@@ -127,4 +127,40 @@ class PermohonanController extends Controller
 
         return redirect()->route('permohonan.masyarakat.store')->with('success', 'Permohonan berhasil diajukan');
     }
+
+    public function resi(Request $request): Response
+    {
+        $query = Permohonan::where('status', 'selesai')->with(['masyarakat.user', 'layanan.persyaratan', 'layanan.instansi'])->latest();
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($query) use ($search) {
+                $query->orWhere('no_resi', 'like', '%' . $search . '%')
+                    ->orWhereHas('masyarakat.user', function ($subquery) use ($search) {
+                        $subquery->where('name', 'like', '%' . $search . '%');
+                    })->orWhereHas('masyarakat', function ($subquery) use ($search) {
+                        $subquery->where('alamat', 'like', '%' . $search . '%')
+                            ->orWhere('no_hp', 'like', '%' . $search . '%');
+                    })->orWhereHas('layanan', function ($subquery) use ($search) {
+                        $subquery->where('nama_layanan', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+
+        $permohonan = $query->paginate($request->perpage ?? 10)->withQueryString();
+        return Inertia::render('auth/admin/resi/index', compact('permohonan'));
+    }
+
+    public function statusPengambilan(Request $request, string $id)
+    {
+        $statusPengambilan = Permohonan::findOrFail($id);
+        $statusPengambilan->status_pengambilan = "1";
+        $statusPengambilan->save();
+
+        $admin = User::where('role', 'admin')->first();
+        $admin->notify(new PermohonanNotification($statusPengambilan, 'Resi sudah diambil', route('resi.index')));
+        event(new PermohonanDibuat($statusPengambilan, 'Resi sudah diambil'));
+
+        return redirect()->back()->with('status', 'Resi telah diambil');
+    }
 }
