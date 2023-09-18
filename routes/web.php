@@ -70,8 +70,7 @@ Route::middleware('guest')->group(function () {
 
 // auth
 Route::middleware(['auth', 'verified'])->group(function () {
-    // logout
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
 
     // profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
