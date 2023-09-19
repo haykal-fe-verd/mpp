@@ -163,4 +163,13 @@ class PermohonanController extends Controller
 
         return redirect()->back()->with('status', 'Resi telah diambil');
     }
+
+    public function statusPengambilanDokumen(Request $request, string $id)
+    {
+        $statusPengambilan = Permohonan::findOrFail($id);
+        $statusPengambilan->status_pengambilan_dokumen = "1";
+        $statusPengambilan->save();
+
+        return redirect()->back()->with('status', 'Dokumen telah diambil');
+    }
 }

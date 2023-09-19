@@ -49,7 +49,6 @@ Route::get('/detail-instansi/{id}', [HomeController::class, 'detailInstansi'])->
 // daftar instansi
 Route::get('/daftar-instansi', [HomeController::class, 'daftarInstansi'])->name('home.daftar.instansi.index');
 
-
 // guest
 Route::middleware('guest')->group(function () {
     // login
@@ -70,8 +69,6 @@ Route::middleware('guest')->group(function () {
 
 // auth
 Route::middleware(['auth', 'verified'])->group(function () {
-
-
     // profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -86,6 +83,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // resi
     Route::get('/admin/resi', [PermohonanController::class, 'resi'])->name('resi.index');
     Route::post('/admin/resi/{id}', [PermohonanController::class, 'statusPengambilan'])->name('resi.post');
+    Route::post('/admin/dokumen/{id}', [PermohonanController::class, 'statusPengambilanDokumen'])->name('dokumen.post');
 
     // admin
     Route::middleware('can:admin')->group(function () {

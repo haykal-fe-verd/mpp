@@ -32,7 +32,9 @@ const header = [
     { name: "No HP", className: "" },
     { name: "Alamat", className: "" },
     { name: "Status", className: "" },
-    { name: "Status Pengambilan", className: "text-center" },
+    { name: "Status Pengambilan Resi", className: "text-center" },
+    { name: "Status Pengambilan Dokumen", className: "text-center" },
+    { name: "@", className: "text-center" },
 ];
 
 function Resi({ permohonan }) {
@@ -52,6 +54,22 @@ function Resi({ permohonan }) {
             }
         });
     };
+
+    const sudahAmbil = (item) => {
+        Swal.fire({
+            title: "Apakah dokumen telah diambil?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya",
+            cancelButtonText: "Tidak",
+            confirmButtonColor: "#2c6beb",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                post(route("dokumen.post", item.id));
+            }
+        });
+    };
+
     return (
         <AuthLayout>
             <Head title="Resi" />
@@ -108,8 +126,32 @@ function Resi({ permohonan }) {
                                             <Check />
                                         </button>
                                     ) : (
-                                        <span>resi sudah diambil</span>
+                                        <span>Sudah</span>
                                     )}
+                                </TableCell>
+                                <TableCell className="text-center">
+                                    {item.status_pengambilan_dokumen === "0" ? (
+                                        <span>Belum</span>
+                                    ) : (
+                                        <span>Sudah</span>
+                                    )}
+                                </TableCell>
+                                <TableCell className="text-center">
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger>
+                                            <MoreVertical className="w-5 h-5" />
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent>
+                                            <DropdownMenuItem
+                                                onClick={() => sudahAmbil(item)}
+                                            >
+                                                <span>
+                                                    Apakah dokumen sudah
+                                                    diambil?
+                                                </span>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
                                 </TableCell>
                             </TableRow>
                         ))

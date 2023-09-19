@@ -238,7 +238,7 @@ function Register() {
                                                     )
                                                 }
                                             />
-                                            <span className="absolute inset-y-0 right-0 flex items-center p-3 text-white rounded-tr-md rounded-br-md bg-primary">
+                                            <span className="absolute inset-y-0 right-0 flex items-center p-3 text-black rounded-tr-md rounded-br-md">
                                                 Tahun
                                             </span>
                                         </div>
